@@ -1,0 +1,55 @@
+{
+	"mode": "predict",
+	"data": {
+		"classes": [
+			"crack",
+			"non crack"
+		],
+		"class_mode": "categorical",
+		"target_size": [256, 256],
+		"batch_size": 96,
+		"shuffle": true
+	},
+	"training": {
+		"filepath": "data/vgg-skz-crack-dataset/train"
+	},
+	"validation": {
+		"filepath": "data/vgg-skz-crack-dataset/validation"
+	},
+	"test": {
+		"filepath": "data/vgg-skz-crack-dataset/test"
+	},
+	"test_whole_image": {
+		"filepath": "data/whole-images/00096.jpg",
+		"detect_size": [256, 256]
+	},
+	"model": {
+		"epochs": 100,
+		"loss": "categorical_crossentropy",
+		"optimizer": "adam",
+		"save_dir": "models/",
+		"load_dir": "models/26102021-231847-e100.h5",
+		"metrics": "accuracy",
+		"layers": [
+			{
+				"type": "dense",
+				"neurons": 128,
+				"activation": "linear"
+			},
+			{
+				"type": "dense",
+				"neurons": 128,
+				"activation": "relu"
+			},
+			{
+				"type": "dropout",
+				"rate": 0.5
+			},
+			{
+				"type": "dense",
+				"neurons": 2,
+				"activation": "softmax"
+			}
+		]
+	}
+}

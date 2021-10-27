@@ -1,0 +1,196 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface version="1.1">
+  <object class="tk.Toplevel" id="main_window">
+    <property name="height">200</property>
+    <property name="width">200</property>
+    <child>
+      <object class="ttk.Frame" id="main_frame">
+        <property name="height">500</property>
+        <property name="padding">30</property>
+        <property name="width">1000</property>
+        <layout manager="pack">
+          <property name="propagate">True</property>
+          <property name="side">top</property>
+        </layout>
+        <child>
+          <object class="ttk.Labelframe" id="frame_predict">
+            <property name="height">200</property>
+            <property name="text" translatable="yes">Predict</property>
+            <property name="width">200</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="propagate">True</property>
+              <property name="row">0</property>
+            </layout>
+            <child>
+              <object class="tk.Canvas" id="canvas_predict">
+                <property name="height">600</property>
+                <property name="relief">raised</property>
+                <property name="takefocus">false</property>
+                <property name="width">800</property>
+                <layout manager="pack">
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Labelframe" id="label_result">
+            <property name="height">200</property>
+            <property name="text" translatable="yes">Result</property>
+            <property name="width">200</property>
+            <layout manager="grid">
+              <property name="column">1</property>
+              <property name="propagate">True</property>
+              <property name="row">0</property>
+            </layout>
+            <child>
+              <object class="tk.Canvas" id="canvas_result">
+                <property name="height">600</property>
+                <property name="width">800</property>
+                <layout manager="pack">
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Button" id="button_detect">
+            <property name="command" type="command" cbtype="simple">on_detect_clicked</property>
+            <property name="text" translatable="yes">Detect!</property>
+            <layout manager="grid">
+              <property name="column">1</property>
+              <property name="propagate">True</property>
+              <property name="row">1</property>
+              <property name="sticky">e</property>
+              <property type="row" id="1" name="pad">10</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Button" id="button_choose_file">
+            <property name="command" type="command" cbtype="simple">on_choose_file_clicked</property>
+            <property name="text" translatable="yes">Choose File</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="propagate">True</property>
+              <property name="row">1</property>
+              <property name="sticky">w</property>
+              <property type="row" id="1" name="pad">10</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Label" id="label_status">
+            <property name="text" translatable="yes">File Not Found!</property>
+            <layout manager="grid">
+              <property name="column">1</property>
+              <property name="propagate">True</property>
+              <property name="row">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Scale" id="scale">
+            <property name="command" type="command" cbtype="scale">accept_whole_number_only</property>
+            <property name="from_">128</property>
+            <property name="orient">horizontal</property>
+            <property name="to">512</property>
+            <property name="value">256</property>
+            <property name="variable">int:var</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="propagate">True</property>
+              <property name="row">1</property>
+              <property type="row" id="1" name="pad">10</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Entry" id="entry2">
+            <property name="textvariable">int:var</property>
+            <property name="validate">none</property>
+            <property name="width">5</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="propagate">True</property>
+              <property name="row">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Frame" id="frame6">
+            <property name="height">15</property>
+            <property name="width">200</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="padx">120</property>
+              <property name="propagate">True</property>
+              <property name="row">1</property>
+              <property name="sticky">e</property>
+              <property type="row" id="1" name="pad">10</property>
+            </layout>
+            <child>
+              <object class="ttk.Label" id="label_detect_size">
+                <property name="text" translatable="yes">Detect size:</property>
+                <layout manager="grid">
+                  <property name="column">0</property>
+                  <property name="propagate">True</property>
+                  <property name="row">0</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Label" id="label_detect_x">
+                <property name="textvariable">string:var</property>
+                <layout manager="grid">
+                  <property name="column">1</property>
+                  <property name="propagate">True</property>
+                  <property name="row">0</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Label" id="label_detect_times">
+                <property name="text" translatable="yes"> x </property>
+                <layout manager="grid">
+                  <property name="column">2</property>
+                  <property name="propagate">True</property>
+                  <property name="row">0</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Label" id="label_detect_y">
+                <property name="textvariable">string:var</property>
+                <layout manager="grid">
+                  <property name="column">3</property>
+                  <property name="propagate">True</property>
+                  <property name="row">0</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Button" id="button_reset">
+            <property name="command" type="command" cbtype="simple">reset_scale</property>
+            <property name="text" translatable="yes">Reset</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="padx">30</property>
+              <property name="propagate">True</property>
+              <property name="row">1</property>
+              <property name="sticky">e</property>
+              <property type="row" id="1" name="pad">10</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
