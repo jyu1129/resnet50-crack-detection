@@ -4,6 +4,7 @@ import tensorflow as tf
 from crack_detection.model import Model
 from tkinter import filedialog
 from PIL import ImageTk, Image
+from datetime import datetime
 
 
 class CrackDetectionApp:
@@ -26,6 +27,8 @@ class CrackDetectionApp:
         self.modelFileName = None
         self.model = None
         self.modelStatus = builder.get_object('label_model')
+        self.safeFilename = None
+        self.saveStatus = builder.get_object('label_save_image')
 
         # Connect method callbacks
         builder.connect_callbacks(self)
@@ -34,6 +37,17 @@ class CrackDetectionApp:
         self.mainwindow.mainloop()
 
     # define the method callbacks
+    def on_save_image_clicked(self):
+        if self.predictedImg is not None:
+            if not os.path.exists('output/'):
+                os.makedirs('output/')
+            now = datetime.now().strftime("%d%m%Y-%H%M%S")
+            image = ImageTk.getimage(self.predictedImg)
+            image.save(f'output/{now}.png', 'PNG')
+            self.saveStatus.config(text=f'Saved to output/{now}.png')
+        else:
+            self.saveStatus.config(text='Nothing to be saved!')
+
     def on_choose_image_clicked(self):
         self.imageFilename = filedialog.askopenfilename(initialdir="/",
                                                         title="Select an Image",
@@ -45,6 +59,7 @@ class CrackDetectionApp:
         self.inputImg = ImageTk.PhotoImage(Image.open(self.imageFilename).resize((800, 600)))
         self.canvas_predict.create_image(0, 0, image=self.inputImg, anchor='nw')
         self.canvas_result.delete('all')
+        self.predictedImg = None
         self.status.config(text='Ready to detect!')
 
     def on_choose_model_clicked(self):

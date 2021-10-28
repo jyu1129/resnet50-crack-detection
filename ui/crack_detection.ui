@@ -215,6 +215,29 @@
             </layout>
           </object>
         </child>
+        <child>
+          <object class="ttk.Button" id="button_save_image">
+            <property name="command" type="command" cbtype="simple">on_save_image_clicked</property>
+            <property name="text" translatable="yes">Save Image</property>
+            <layout manager="grid">
+              <property name="column">1</property>
+              <property name="propagate">True</property>
+              <property name="row">2</property>
+              <property name="sticky">e</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Label" id="label_save_image">
+            <layout manager="grid">
+              <property name="column">1</property>
+              <property name="padx">80</property>
+              <property name="propagate">True</property>
+              <property name="row">2</property>
+              <property name="sticky">e</property>
+            </layout>
+          </object>
+        </child>
       </object>
     </child>
   </object>
