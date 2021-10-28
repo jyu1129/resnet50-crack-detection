@@ -2,6 +2,7 @@
 <interface version="1.1">
   <object class="tk.Toplevel" id="main_window">
     <property name="height">200</property>
+    <property name="title" translatable="yes">crack detection</property>
     <property name="width">200</property>
     <child>
       <object class="ttk.Frame" id="main_frame">
@@ -72,9 +73,9 @@
           </object>
         </child>
         <child>
-          <object class="ttk.Button" id="button_choose_file">
-            <property name="command" type="command" cbtype="simple">on_choose_file_clicked</property>
-            <property name="text" translatable="yes">Choose File</property>
+          <object class="ttk.Button" id="button_choose_image">
+            <property name="command" type="command" cbtype="simple">on_choose_image_clicked</property>
+            <property name="text" translatable="yes">Open Image</property>
             <layout manager="grid">
               <property name="column">0</property>
               <property name="propagate">True</property>
@@ -187,6 +188,30 @@
               <property name="row">1</property>
               <property name="sticky">e</property>
               <property type="row" id="1" name="pad">10</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Button" id="button_choose_model">
+            <property name="command" type="command" cbtype="simple">on_choose_model_clicked</property>
+            <property name="text" translatable="yes">Choose a Model</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="propagate">True</property>
+              <property name="row">2</property>
+              <property name="sticky">w</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Label" id="label_model">
+            <property name="text" translatable="yes">Model Not Found!</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="padx">100</property>
+              <property name="propagate">True</property>
+              <property name="row">2</property>
+              <property name="sticky">w</property>
             </layout>
           </object>
         </child>

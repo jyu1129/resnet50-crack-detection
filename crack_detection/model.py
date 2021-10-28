@@ -2,13 +2,13 @@ import tensorflow as tf
 import numpy as np
 import os
 import datetime as dt
+import cv2
 from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from tensorflow.keras.applications import ResNet50
 from tensorflow.keras.applications.resnet50 import preprocess_input
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from cv2 import cv2
 from urllib.request import urlopen
 from crack_detection.utils import Timer
 

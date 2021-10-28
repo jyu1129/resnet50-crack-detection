@@ -4,10 +4,65 @@
     Crack Detection is a tool that utilizes deep learning to recognize concrete wall cracks in pictures.
 </p>
 <p align="center">
-<img src = "https://imgur.com/a/eDnlR5N" />
+<img src = "https://i.imgur.com/hRG0RHS.png" />
 </p>
 
 <p align="center">
-<img src="https://imgur.com/a/t3JZj2y" />
+<img src="https://i.imgur.com/2kf0vrI.png" />
 <br />Cracks detected on a concrete wall
 </p>
+
+- [resnet50_crack_detection](#resnet50-crack-detection)
+- [How to set up and run the project](#how-to-set-up-and-run-the-project)
+
+# How to set up and run the project
+
+-----
+ResNet-50 Crack detection program is a Python program that will run on multiple Operating Systems including Windows, 
+Linux, and macOS.
+
+## Prerequisites
+Machine learning entails a great deal of trial and error. The software is designed to experiment with thousands of 
+various parameters in order to find an algorithm that performs the result that are supposed to do. This program will 
+take a very long time unless you have the necessary hardware.
+
+Graphics cards, rather than CPUs, are better suited for the sort of computations that this program does. The training 
+procedure must be executed on a PC with a GPU capable of doing so. When you do this on a CPU, it can take up to 16 hours 
+to train your model, but it just takes a few hours on a GPU.
+
+## Installer
+There is an installer which installs everything for you and creates a desktop shortcut to launch straight into the GUI. 
+You can find it from https://github.com/jyu1129/resnet50-crack-detection/releases.
+
+## Manual Install
+Clone the repo with git or download the code from https://github.com/jyu1129/resnet50-crack-detection.
+
+### Requirements
+Run `pip install -r requirements.txt` to install all the dependencies that are required by this project to work.
+
+### Running the project
+There will be two main processes/modes that can be run here, which is training and predicting.
+
+#### Configuring JSON file
+##### mode
+Open the `config.json` file with any IDE or text editor. The mode is defaulted as `train` which configure the project to 
+run on *train mode*. There will be three main processes/modes that can be run here, `train` which is *train mode*
+which train a new model based on the settings below in the `config.json` file; `predict-test` which is *predict on test
+dataset mode* which run predictions on test dataset with the model loaded; `predict` which is *predict on a single image
+mode* which run prediction on an image with the model loaded.
+
+##### data
+It is not recommended editing this field as it will break the process code in the project.
+
+##### training / validation / test
+This is to specify the filepath of the dataset for training process.
+
+##### test_whole_image
+This is to specify the filepath and the target size of the image for `predict` mode.
+
+##### model
+It is also not recommended editing these fields except for `save_dir` and `load_dir` which is the save directory and 
+load directory for the model(s) trained.
+
+#### Running the project
+Run it with `python run.py`

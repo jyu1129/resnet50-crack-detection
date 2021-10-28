@@ -3,7 +3,6 @@ import math
 import os
 import numpy as np
 import tensorflow as tf
-from cv2 import cv2
 from matplotlib import pyplot as plt
 from crack_detection.data_processor import DataLoader
 from crack_detection.model import Model
@@ -108,7 +107,7 @@ def main():
             ds_test = data.get_test_data(configs)
             predictions = model.predict_by_batch(ds_test)
             display_batch_of_images(ds_test, configs['data']['classes'], predictions)
-        else:
+        elif configs['mode'] == 'predict':
             model = Model()
             model.load_model(configs['model']['load_dir'])
             predictions, crack_status = model.predict_on_crops(

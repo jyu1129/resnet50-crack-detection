@@ -1,5 +1,5 @@
 {
-	"mode": "predict",
+	"mode": "train",
 	"data": {
 		"classes": [
 			"crack",

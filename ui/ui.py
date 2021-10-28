@@ -1,5 +1,5 @@
+import os
 import pygubu
-import json
 import tensorflow as tf
 from crack_detection.model import Model
 from tkinter import filedialog
@@ -15,16 +15,17 @@ class CrackDetectionApp:
         # 2: Load an ui file
         builder.add_from_file('crack_detection.ui')
 
-        # 3: Create the mainwindow
         self.mainwindow = builder.get_object('main_window')
-
         self.canvas_predict = builder.get_object('canvas_predict')
         self.inputImg = None
         self.canvas_result = builder.get_object('canvas_result')
         self.predictedImg = None
-        self.filename = None
+        self.imageFilename = None
         self.status = builder.get_object('label_status')
         self.scale = builder.get_object('scale')
+        self.modelFileName = None
+        self.model = None
+        self.modelStatus = builder.get_object('label_model')
 
         # Connect method callbacks
         builder.connect_callbacks(self)
@@ -33,37 +34,52 @@ class CrackDetectionApp:
         self.mainwindow.mainloop()
 
     # define the method callbacks
-    def on_choose_file_clicked(self):
-        self.filename = filedialog.askopenfilename(initialdir="/",
-                                                   title="Select an Image",
-                                                   filetypes=[('Image Files',
-                                                               ('.png', '.jpg')),
-                                                              ],
-                                                   )
+    def on_choose_image_clicked(self):
+        self.imageFilename = filedialog.askopenfilename(initialdir="/",
+                                                        title="Select an Image",
+                                                        filetypes=[('Image Files',
+                                                                    ('.png', '.jpg')),
+                                                                   ],
+                                                        )
 
-        self.inputImg = ImageTk.PhotoImage(Image.open(self.filename).resize((800, 600)))
+        self.inputImg = ImageTk.PhotoImage(Image.open(self.imageFilename).resize((800, 600)))
         self.canvas_predict.create_image(0, 0, image=self.inputImg, anchor='nw')
         self.canvas_result.delete('all')
         self.status.config(text='Ready to detect!')
 
-    def on_detect_clicked(self):
-        self.status.config(text='Detecting...')
-        self.status.update()
+    def on_choose_model_clicked(self):
+        self.modelFileName = filedialog.askopenfilename(initialdir="/",
+                                                        title="Select a Model",
+                                                        filetypes=[('Models',
+                                                                    '.h5'),
+                                                                   ],
+                                                        )
+        self.modelStatus.config(text='Loading...')
+        self.modelStatus.update()
         with tf.device('/device:GPU:0'):
-            configs = json.load(open('../config.json', 'r'))
-            model = Model()
-            model.load_model(f'../{configs["model"]["load_dir"]}')
-            predictions, crack_status = model.predict_on_crops(self.filename,
-                                                               configs['data']['classes'],
-                                                               width=int(self.scale.get()),
-                                                               height=int(self.scale.get())
-                                                               )
-            self.predictedImg = ImageTk.PhotoImage(Image.fromarray(predictions).resize((800, 600)))
-            self.canvas_result.create_image(0, 0, image=self.predictedImg, anchor='nw')
-        if crack_status:
-            self.status.config(text='Detected!')
+            self.model = Model()
+            self.model.load_model(self.modelFileName)
+
+        self.modelStatus.config(text=os.path.basename(self.modelFileName))
+
+    def on_detect_clicked(self):
+        if self.model is not None:
+            self.status.config(text='Detecting...')
+            self.status.update()
+            with tf.device('/device:GPU:0'):
+                predictions, crack_status = self.model.predict_on_crops(self.imageFilename,
+                                                                        ['crack', 'non crack'],
+                                                                        width=int(self.scale.get()),
+                                                                        height=int(self.scale.get())
+                                                                        )
+                self.predictedImg = ImageTk.PhotoImage(Image.fromarray(predictions).resize((800, 600)))
+                self.canvas_result.create_image(0, 0, image=self.predictedImg, anchor='nw')
+            if crack_status:
+                self.status.config(text='Detected!')
+            else:
+                self.status.config(text='Undetected')
         else:
-            self.status.config(text='Undetected')
+            self.status.config(text='Please choose a model!')
 
     def accept_whole_number_only(self, e=None):
         value = self.scale.get()
