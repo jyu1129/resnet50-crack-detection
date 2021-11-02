@@ -82,7 +82,8 @@ def main():
         configs = json.load(open('config.json', 'r'))
 
         if configs['mode'] == 'train':
-            if not os.path.exists(configs['model']['save_dir']): os.makedirs(configs['model']['save_dir'])
+            if not os.path.exists(configs['model']['save_dir']):
+                os.makedirs(configs['model']['save_dir'])
 
             data = DataLoader()
             ds_train = data.get_train_data(configs)
@@ -103,7 +104,7 @@ def main():
         elif configs['mode'] == 'predict-test':
             data = DataLoader()
             model = Model()
-            model.load_model('models/26102021-231847-e100.h5')
+            model.load_model(configs['model']['load_dir'])
             ds_test = data.get_test_data(configs)
             predictions = model.predict_by_batch(ds_test)
             display_batch_of_images(ds_test, configs['data']['classes'], predictions)
