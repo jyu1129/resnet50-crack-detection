@@ -57,7 +57,7 @@ class CrackDetectionApp:
                                                                    ],
                                                         )
 
-        self.inputImg = ImageTk.PhotoImage(Image.open(self.imageFilename).resize((800, 600)))
+        self.inputImg = ImageTk.PhotoImage(Image.open(self.imageFilename).resize((600, 400)))
         self.canvas_predict.create_image(0, 0, image=self.inputImg, anchor='nw')
         self.canvas_result.delete('all')
         self.predictedImg = None
@@ -88,7 +88,7 @@ class CrackDetectionApp:
                                                                         width=int(self.scale.get()),
                                                                         height=int(self.scale.get())
                                                                         )
-                self.predictedImg = ImageTk.PhotoImage(Image.fromarray(predictions).resize((800, 600)))
+                self.predictedImg = ImageTk.PhotoImage(Image.fromarray(predictions).resize((600, 400)))
                 self.canvas_result.create_image(0, 0, image=self.predictedImg, anchor='nw')
             if crack_status:
                 self.status.config(text='Detected!')
