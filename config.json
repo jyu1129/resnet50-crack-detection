@@ -1,5 +1,5 @@
 {
-	"mode": "predict-test",
+	"mode": "predict",
 	"data": {
 		"classes": [
 			"crack",
@@ -20,7 +20,7 @@
 		"filepath": "data/vgg-skz-crack-dataset/test"
 	},
 	"test_whole_image": {
-		"filepath": "data/whole-images/00096.jpg",
+		"filepath": "data/whole-images/00037.jpg",
 		"detect_size": [256, 256]
 	},
 	"model": {

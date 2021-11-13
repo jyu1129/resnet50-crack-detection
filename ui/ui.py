@@ -29,6 +29,7 @@ class CrackDetectionApp:
         self.modelStatus = builder.get_object('label_model')
         self.safeFilename = None
         self.saveStatus = builder.get_object('label_save_image')
+        self.mainwindow.iconbitmap('icon.ico')
 
         # Connect method callbacks
         builder.connect_callbacks(self)

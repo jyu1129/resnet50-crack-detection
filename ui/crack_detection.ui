@@ -25,10 +25,10 @@
             </layout>
             <child>
               <object class="tk.Canvas" id="canvas_predict">
-                <property name="height">600</property>
+                <property name="height">400</property>
                 <property name="relief">raised</property>
                 <property name="takefocus">false</property>
-                <property name="width">800</property>
+                <property name="width">600</property>
                 <layout manager="pack">
                   <property name="propagate">True</property>
                   <property name="side">top</property>
@@ -49,8 +49,8 @@
             </layout>
             <child>
               <object class="tk.Canvas" id="canvas_result">
-                <property name="height">600</property>
-                <property name="width">800</property>
+                <property name="height">400</property>
+                <property name="width">600</property>
                 <layout manager="pack">
                   <property name="propagate">True</property>
                   <property name="side">top</property>
