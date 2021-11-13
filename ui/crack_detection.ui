@@ -231,9 +231,8 @@
           <object class="ttk.Label" id="label_save_image">
             <layout manager="grid">
               <property name="column">1</property>
-              <property name="padx">80</property>
               <property name="propagate">True</property>
-              <property name="row">2</property>
+              <property name="row">3</property>
               <property name="sticky">e</property>
             </layout>
           </object>
