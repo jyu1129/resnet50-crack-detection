@@ -16,6 +16,7 @@
 - [How to set up and run the project](#how-to-set-up-and-run-the-project)
   - [Prerequisites](#prerequisites)
   - [Installer](#installer)
+  - [Web deployment](#web-deployment)
   - [Manual Install](#manual-install)
     - [Requirements](#requirements)
     - [Configuring JSON file](#configuring-json-file)
@@ -38,6 +39,9 @@ Graphics cards, rather than CPUs, are better suited for the sort of computations
 
 ## Installer
 There is an installer which installs everything for you and creates a desktop shortcut to launch straight into the GUI. You can find it from https://github.com/jyu1129/resnet50-crack-detection/releases.
+
+## Web Deployment
+If you are planning to just test it out , you can head over to the link provided. https://share.streamlit.io/jyu1129/resnet50-crack-detection/web/web.py
 
 ## Manual Install
 Clone the repo with git or download the code from https://github.com/jyu1129/resnet50-crack-detection.
