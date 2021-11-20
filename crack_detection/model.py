@@ -117,11 +117,6 @@ class Model:
                 processed_a = test_datagen.flow(a).next()
                 # discard image crops that are not full size
                 predicted_class = classes[int(np.argmax(self.model.predict(processed_a), axis=-1))]
-                # # save image
-                # file, ext = os.path.splitext(input_image)
-                # image_name = file.split('/')[-1]
-                # folder_name = 'out_' + image_name
-                # Put predicted class on the image
                 if predicted_class == 'crack':
                     color = (0, 0, 255)
                     crack_status = True
@@ -131,16 +126,8 @@ class Model:
                 b = np.zeros_like(a, dtype=np.uint8)
                 b[:] = color
                 add_img = cv2.addWeighted(a, 0.9, b, 0.1, 0, dtype=cv2.CV_64F)
-                # Save crops
-                # if save_crops:
-                #     if not os.path.exists(os.path.join('predictions', folder_name)):
-                #         os.makedirs(os.path.join('predictions', folder_name))
-                #     filename = os.path.join('predictions', folder_name, 'img_{}.png'.format(k))
-                #     cv2.imwrite(filename, add_img)
                 output_image[i:i + height, j:j + width, :] = add_img
                 k += 1
-        # # Save output image
-        # cv2.imwrite(os.path.join('predictions', folder_name + '.jpg'), output_image)
 
         output_image = cv2.cvtColor(output_image, cv2.COLOR_BGR2RGB)
         return output_image, crack_status
