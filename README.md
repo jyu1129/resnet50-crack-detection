@@ -29,8 +29,7 @@
 # How to set up and run the project
 
 -----
-ResNet-50 Crack detection program is a Python program that will run on multiple Operating Systems including Windows, 
-Linux, and macOS.
+ResNet-50 Crack detection program is a Python program that will run on Windows Operating Systems but not tested on Linux, and macOS.
 
 ## Prerequisites
 Machine learning entails a great deal of trial and error. The software is designed to experiment with thousands of 
