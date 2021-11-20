@@ -34,7 +34,7 @@ ResNet-50 Crack detection program is a Python program that will run on Windows O
 ## Prerequisites
 Machine learning entails a great deal of trial and error. The software is designed to experiment with thousands of  various parameters in order to find an algorithm that performs the result that are supposed to do. This program will take a very long time unless you have the necessary hardware.
 
-Graphics cards, rather than CPUs, are better suited for the sort of computations that this program does. The training procedure must be executed on a PC with a GPU capable of = doing so. When you do this on a CPU, it can take up to 16 hours to train your model, but it just takes a few hours on a GPU.
+Graphics cards, rather than CPUs, are better suited for the sort of computations that this program does. The training procedure must be executed on a PC with a GPU capable of doing so. When you do this on a CPU, it can take up to 16 hours to train your model, but it just takes a few hours on a GPU.
 
 ## Installer
 There is an installer which installs everything for you and creates a desktop shortcut to launch straight into the GUI. You can find it from https://github.com/jyu1129/resnet50-crack-detection/releases.
