@@ -1,9 +1,8 @@
-opencv-python
-tensorflow-gpu
-matplotlib
-Pillow
-scipy
-pygubu
-future
-numpy
-streamlit
+opencv-python~=4.5.4.58
+tensorflow-gpu~=2.6.0
+matplotlib~=3.4.3
+Pillow~=8.4.0
+pygubu~=0.18.1
+future~=0.18.2
+numpy~=1.19.5
+streamlit~=1.2.0
