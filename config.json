@@ -1,5 +1,5 @@
 {
-	"mode": "predict",
+	"mode": "predict-live",
 	"data": {
 		"classes": [
 			"crack",
@@ -9,7 +9,7 @@
 		"target_size": [256, 256],
 		"batch_size": 96,
 		"shuffle": true
-	},
+    },
 	"training": {
 		"filepath": "data/vgg-skz-crack-dataset/train"
 	},
@@ -23,6 +23,10 @@
 		"filepath": "data/whole-images/00037.jpg",
 		"detect_size": [256, 256]
 	},
+    "live": {
+        "url": "http://192.168.43.1:8080/video",
+        "detect_size": [256, 256]
+    },
 	"model": {
 		"epochs": 100,
 		"loss": "categorical_crossentropy",

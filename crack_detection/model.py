@@ -1,7 +1,9 @@
+import imutils
+from datetime import datetime
+from time import time, sleep
 import tensorflow as tf
 import numpy as np
 import os
-import datetime as dt
 import cv2
 from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.layers import Dense, Dropout
@@ -10,7 +12,7 @@ from tensorflow.keras.applications import ResNet50
 from tensorflow.keras.applications.resnet50 import preprocess_input
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from urllib.request import urlopen
-from crack_detection.utils import Timer
+from crack_detection.utils import Timer, ThreadedCamera
 
 
 class Model:
@@ -63,7 +65,7 @@ class Model:
         print('[Model] Training Started')
         print('[Model] %s epochs, %s batch size' % (epochs, batch_size))
 
-        save_fname = os.path.join(save_dir, '%s-e%s.h5' % (dt.datetime.now().strftime('%d%m%Y-%H%M%S'), str(epochs)))
+        save_fname = os.path.join(save_dir, '%s-e%s.h5' % (datetime.now().strftime('%d%m%Y-%H%M%S'), str(epochs)))
         callbacks = [
             EarlyStopping(monitor='val_loss', patience=2),
             ModelCheckpoint(filepath=save_fname, monitor='val_loss', save_best_only=True)
@@ -92,42 +94,78 @@ class Model:
         return predictions
         # display_batch_of_images(data, self.classes, predictions)
 
-    def predict_on_crops(self, input_image, classes, https=False, height=256, width=256, save_crops=False):
+    def predict_on_crops(self, input_image, classes, https=False, height=256, width=256, is_numpy=False):
         # Run prediction on whole image
         if https:
             req = urlopen(input_image)
             arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
             im = cv2.imdecode(arr, -1)
-        else:
+        elif not is_numpy:
             im = cv2.imread(input_image)
+        else:
+            im = input_image
 
         if len(im.shape) == 3:
             img_height, img_width, channels = im.shape
         else:
             im = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
             img_height, img_width, channels = im.shape
-        k = 0
         output_image = np.zeros_like(im)
         crack_status = False
         test_datagen = ImageDataGenerator(preprocessing_function=preprocess_input)
         for i in range(0, img_height, height):
             for j in range(0, img_width, width):
-                a = im[i:i + height, j:j + width]
-                a = np.expand_dims(a, axis=0)
-                processed_a = test_datagen.flow(a).next()
-                # discard image crops that are not full size
+                crop = im[i:i + height, j:j + width]
+                crop = np.expand_dims(crop, axis=0)
+                processed_a = test_datagen.flow(crop).next()
                 predicted_class = classes[int(np.argmax(self.model.predict(processed_a), axis=-1))]
                 if predicted_class == 'crack':
                     color = (0, 0, 255)
                     crack_status = True
                 else:
                     color = (0, 255, 0)
-                cv2.putText(a, predicted_class, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.7, color, 1, cv2.LINE_AA)
-                b = np.zeros_like(a, dtype=np.uint8)
-                b[:] = color
-                add_img = cv2.addWeighted(a, 0.9, b, 0.1, 0, dtype=cv2.CV_64F)
+                predicted_crop = np.zeros_like(crop, dtype=np.uint8)
+                predicted_crop[:] = color
+                add_img = cv2.addWeighted(crop, 0.9, predicted_crop, 0.1, 0, dtype=cv2.CV_64F)
                 output_image[i:i + height, j:j + width, :] = add_img
-                k += 1
 
         output_image = cv2.cvtColor(output_image, cv2.COLOR_BGR2RGB)
         return output_image, crack_status
+
+    def detect_live_video(self, url, classes, height, width):
+        print("[Detection] Receiving data from " + url)
+        print("[Detection] Running predictions..")
+        threaded_camera = ThreadedCamera(url)
+        x_shape, y_shape = threaded_camera.x_y_shape()
+        four_cc = cv2.VideoWriter_fourcc(*"MJPG")
+        if not os.path.exists('reports/video_output/'):
+            os.makedirs('reports/video_output/')
+        now = datetime.now().strftime("%d%m%Y-%H%M%S")
+        out = cv2.VideoWriter(f'reports/video_output/{now}.avi', four_cc, 20, (x_shape, y_shape))
+        while True:
+            try:
+                start_time = time()
+                frame = threaded_camera.get_frame()
+                results, crack_status = self.predict_on_crops(frame, classes, height=height, width=width, is_numpy=True)
+                bgr = (0, 255, 0)
+                cv2.putText(results, "Crack Status: " + str(crack_status), (0, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.9, bgr,
+                            2)
+                results = cv2.cvtColor(results, cv2.COLOR_RGB2BGR)
+                end_time = time()
+                fps = 1 / np.round(end_time - start_time, 3)
+                print(f"Frames Per Second : {fps}")
+
+                if fps <= 0:
+                    fps = 1
+
+                ran = int(20 / fps)
+                if ran < 1:
+                    ran = 1
+
+                for _ in range(ran):
+                    out.write(results)
+                results = imutils.resize(results, width=800)
+                cv2.imshow('Live', results)
+                cv2.waitKey(threaded_camera.fps_ms)
+            except AttributeError:
+                pass
