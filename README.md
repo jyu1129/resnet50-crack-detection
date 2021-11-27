@@ -53,7 +53,7 @@ Run `pip install -r requirements.txt` to install all the dependencies that are r
 There will be two main processes/modes that can be run here, which is training and predicting.
 
 #### mode
-Open the `config.json` file with any IDE or text editor. The mode is defaulted as `train` which configure the project to run on *train mode*. There will be three main processes/modes that can be run here, `train` which is *train mode* which train a new model based on the settings below in the `config.json` file; `predict-test` which is *predict on test dataset mode* which run predictions on test dataset with the model loaded; `predict` which is *predict on a single image mode* which run prediction on an image with the model loaded.
+Open the `config.json` file with any IDE or text editor. The mode is defaulted as `train` which configure the project to run on *train mode*. There will be three main processes/modes that can be run here, `train` which is *train mode* which train a new model based on the settings below in the `config.json` file; `predict-test` which is *predict on test dataset mode* which run predictions on test dataset with the model loaded; `predict` which is *predict on a single image mode* which run prediction on an image with the model loaded; `predict-live` which is *predict on a video streaming website mode* which run prediction on a live-streaming video with the URL loaded.
 
 #### data
 It is not recommended editing this field as it will break the process code in the project.
@@ -63,6 +63,9 @@ This is to specify the filepath of the dataset for training process.
 
 #### test_whole_image
 This is to specify the filepath and the target size of the image for `predict` mode.
+
+#### live
+This is to specify the video streaming url and also the kernel size for `predict-live` mode.
 
 #### model
 It is also not recommended editing these fields except for `save_dir` and `load_dir` which is the save directory and load directory for the model(s) trained.
