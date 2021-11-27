@@ -118,6 +118,11 @@ def main():
                 width=configs['test_whole_image']['detect_size'][1]
             )
             display_image(predictions)
+        elif configs['mode'] == 'predict-live':
+            model = Model()
+            model.load_model(configs['model']['load_dir'])
+            model.detect_live_video(configs['live']['url'], configs['data']['classes'],
+                                    configs['live']['detect_size'][0], configs['live']['detect_size'][1])
 
 
 if __name__ == '__main__':

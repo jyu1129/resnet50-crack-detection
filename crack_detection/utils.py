@@ -1,4 +1,7 @@
 import datetime as dt
+import time
+from threading import Thread
+import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import math
@@ -86,3 +89,32 @@ def display_batch_of_images(directory_iterator, classes, predictions=None, name=
     else:
         plt.subplots_adjust(wspace=spacing, hspace=spacing)
     plt.show()
+
+
+class ThreadedCamera(object):
+    def __init__(self, url=0):
+        self.status = None
+        self.frame = None
+        self.capture = cv2.VideoCapture(url)
+        self.capture.set(cv2.CAP_PROP_BUFFERSIZE, 2)
+
+        self.fps = 1/30
+        self.fps_ms = int(self.fps * 1000)
+
+        thread = Thread(target=self.update, args=())
+        thread.daemon = True
+        thread.start()
+
+    def update(self):
+        while True:
+            if self.capture.isOpened():
+                self.status, self.frame = self.capture.read()
+            time.sleep(self.fps)
+
+    def get_frame(self):
+        return self.frame
+
+    def x_y_shape(self):
+        x_shape = int(self.capture.get(cv2.CAP_PROP_FRAME_WIDTH))
+        y_shape = int(self.capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        return x_shape, y_shape
