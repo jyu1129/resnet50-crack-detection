@@ -6,4 +6,4 @@ pygubu~=0.18.1
 future~=0.18.2
 numpy~=1.19.5
 streamlit~=1.2.0
-scipy
+scipy~=1.7.2
